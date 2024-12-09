@@ -3,10 +3,18 @@ const cors = require('cors');
 const { hamroPatro, getHoroscope, getGoldPrices, getExchangeRates } = require('hamro-patro-scraper');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Root endpoint for health check
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Nepali Calendar Dashboard Backend', 
+    status: 'healthy' 
+  });
+});
 
 // Get Nepali date and time
 app.get('/datetime', async (req, res) => {
@@ -100,5 +108,5 @@ app.get('/forex', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
